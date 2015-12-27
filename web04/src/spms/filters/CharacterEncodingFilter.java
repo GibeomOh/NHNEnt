@@ -27,7 +27,7 @@ public class CharacterEncodingFilter implements Filter {
 		nextFilter.doFilter(request, response);
 		
 		// 서블릿을 실행한 후, 클라이언트에게 응답하기 전에 해야할 작업
-	}
+	} 
 
 	@Override
 	public void init(FilterConfig config) throws ServletException {
