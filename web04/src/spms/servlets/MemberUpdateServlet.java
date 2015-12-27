@@ -8,12 +8,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
+@WebServlet("/member/update")
 public class MemberUpdateServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -22,11 +24,12 @@ public class MemberUpdateServlet extends HttpServlet {
 		ResultSet rs = null;
 		
 		try {
-			Class.forName(this.getInitParameter("driver"));
+			ServletContext sc = this.getServletContext();
+			Class.forName(sc.getInitParameter("driver"));
 			
 			// 초기화 매개변수를 이용하여 데이터베이스에 연결
-			conn = DriverManager.getConnection(this.getInitParameter("url"), this.getInitParameter("username"),
-					this.getInitParameter("password"));
+			conn = DriverManager.getConnection(sc.getInitParameter("url"), sc.getInitParameter("username"),
+					sc.getInitParameter("password"));
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery("select MNO,EMAIL,MNAME,CRE_DATE from MEMBERS" + " where MNO=" + request.getParameter("no"));
 			rs.next();
@@ -61,8 +64,10 @@ public class MemberUpdateServlet extends HttpServlet {
 		PreparedStatement stmt = null;
 		
 		try {
-			Class.forName(this.getInitParameter("driver"));
-			conn = DriverManager.getConnection(this.getInitParameter("url"), this.getInitParameter("username"), this.getInitParameter("password"));
+			ServletContext sc = this.getServletContext();
+			Class.forName(sc.getInitParameter("driver"));
+			
+			conn = DriverManager.getConnection(sc.getInitParameter("url"), sc.getInitParameter("username"), sc.getInitParameter("password"));
 			stmt = conn.prepareStatement("UPDATE MEMBERS SET EMAIL=?,MNAME=?,MOD_DATE=now()" + " WHERE MNO=?");
 			stmt.setString(1, request.getParameter("email"));
 			stmt.setString(2, request.getParameter("name"));
