@@ -24,7 +24,7 @@ public class MemberListServlet extends GenericServlet {
 		
 		try {
 			DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-			conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1/studydb", "NHNEnt", "1234");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost/studydb", "NHNEnt", "1234");
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery("select MNO,MNAME,EMAIL,CRE_DATE" + " from MEMBERS" + " order by MNO ASC");
 			
@@ -47,10 +47,12 @@ public class MemberListServlet extends GenericServlet {
 			
 		} catch(Exception e) {
 			throw new ServletException(e);
+			
 		} finally {
 			try { if(rs != null) rs.close(); } catch(Exception e) {}
 			try { if(stmt != null) stmt.close(); } catch(Exception e) {}
 			try { if(conn != null) conn.close(); } catch(Exception e) {}
+			
 		}
 	}
 
