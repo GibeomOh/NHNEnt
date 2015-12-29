@@ -48,9 +48,7 @@ public class BoardViewServlet extends HttpServlet {
         request.setAttribute("boardModel", boardModel);
         
         // View 보내기
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsps/board/boardView.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/jsps/board/boardView.jsp");
         requestDispatcher.forward(request, response);
-		
-		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 }

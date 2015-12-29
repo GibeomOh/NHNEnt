@@ -1,5 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="model.board.BoardModel, java.util.List" %>
+<%
+	List<BoardModel> boardList = (List<BoardModel>)request.getAttribute("boardList");
+	BoardModel boardModel = (BoardModel)request.getAttribute("boardModel");
+	int totalCount = (Integer)request.getAttribute("totalCount");
+	String pageNavigator = (String)request.getAttribute("pageNavigator");
+%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <!-- XHTML 네임스페이스: 작성된 페이지가 XHTML로 작성되었음을 알림 -->
@@ -18,20 +25,11 @@
 		location.href=url;
 	}
 </script>
+<%
+
+%>
 </head>
 <body>
-	<form name="searchForm" action="" method="get">
-	<p>
-		<select name="searchType">
-			<option value="ALL">전체검색</option>
-			<option value="SUBJECT">제목</option>
-			<option value="WRITER">작성자</option>
-			<option value="CONTENTS">내용</option>
-		</select>
-		<input type="text" name="searchText" value="" />
-		<input type="submit" value="검색" />
-	</p>
-	</form>
 	<table border="1" summary="게시판 목록">
 		<caption>게시판 목록</caption>
 		<colgroup>
@@ -51,26 +49,38 @@
 			</tr>
 		</thead>
 		<tbody>
+			<%
+			if (totalCount == 0) {
+			%>
 			<tr>
 				<td align="center" colspan="5">등록된 게시물이 없습니다.</td>
 			</tr>
+			<%
+			} else {
+				for (int i=0, size=boardList.size(); i<size; i++) {
+					BoardModel board = boardList.get(i);
+			%>
 			<tr>
-				<td align="center">1</td>
-				<td><a href="boardView.jsp">동해물과 백두산이 마르고 닳도록 하...</a></td>
-				<td align="center">김연석</td>
-				<td align="center">2013.06.24</td>
-				<td align="center">10</td>
+				<td align="center"><%=totalCount %></td>
+				<td><a href="boardViewServlet?num=<%=board.getNum()%>"><%=board.getSubject()%></a></td>
+				<td align="center"><%=board.getEmail()%></td>
+				<td align="center"><%=board.getRegDate().substring(0, 10) %></td>
+				<td align="center"><%=board.getHit()%></td>
 			</tr>
+			<%
+				}
+			}
+			%>
 		</tbody>
 		<tfoot>
 			<tr>
-				<td align="center" colspan="5">1</td>
+				<td align="center" colspan="5"><%=pageNavigator%></td>
 			</tr>
 		</tfoot>
 	</table>
 	<p>
-		<input type="button" value="목록" onclick="goUrl('boardList.jsp');" />
-		<input type="button" value="글쓰기" onclick="goUrl('boardWriteForm.jsp');" />
+		<input type="button" value="목록" onclick="goUrl('<%=request.getContextPath()%>/board/boardListServlet');" />
+		<input type="button" value="글쓰기" onclick="goUrl('<%=request.getContextPath()%>/board/boardWriteServlet');" />
 	</p>
 </body>
 </html>

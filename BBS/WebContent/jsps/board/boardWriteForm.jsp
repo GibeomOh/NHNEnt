@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
-<title>게시판 등록 폼</title>
+<title>NHNEnt. 게시판: 글 등록</title>
 <style type="text/css">
 	* {font-size: 9pt;}
 	p {width: 600px; text-align: right;}
@@ -22,15 +22,17 @@
 	}
 </script>
 </head>
+
 <body>
 	<form name="boardWriteForm" action="boardProcess.jsp" method="post" onsubmit="return boardWriteCheck();">
 	<input type="hidden" name="mode" value="W" />
-	<table border="1" summary="게시판 등록 폼">
-		<caption>게시판 등록 폼</caption>
+	<table border="1" summary="글 등록">
+		<caption>글 등록</caption>
 		<colgroup>
 			<col width="100" />
 			<col width="500" />
 		</colgroup>
+		
 		<tbody>
 			<tr>
 				<th align="center">제목</th>
@@ -45,6 +47,7 @@
 			</tr>
 		</tbody>
 	</table>
+	
 	<p>
 		<input type="button" value="목록" onclick="goUrl('boardList.jsp');" />
 		<input type="submit" value="글쓰기" />

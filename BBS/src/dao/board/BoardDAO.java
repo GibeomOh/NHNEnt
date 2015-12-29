@@ -77,22 +77,41 @@ public class BoardDAO {
                 boardModel.setContents(this.rs.getString("contents"));
                 boardModel.setRegDate(this.rs.getString("reg_date"));
                 boardModel.setHit(this.rs.getInt("hit"));
-                
     		}
-    		
     	} catch(Exception e) {
     		e.printStackTrace();
-    		
     	} finally {
     		// 데이터베이스 관련 클래스들의 종료
 			try { if(rs != null) rs.close(); } catch(Exception e) {}
 			try { if(pstmt != null) pstmt.close(); } catch(Exception e) {}
 			try { if(conn != null) conn.close(); } catch(Exception e) {}
-			
     	}
     	
     	return boardModel;
     }
+    
+    public int selectCount(BoardModel boardModel) {
+		int totalCount = 0;
+
+		try {
+			Class.forName(this.JDBC_DRIVER);
+			this.conn = DriverManager.getConnection(this.DB_URL, this.DB_ID, this.DB_PWD);
+			this.pstmt = this.conn.prepareStatement("SELECT COUNT(num) AS total FROM board");
+			this.rs = this.pstmt.executeQuery();
+			
+			if (this.rs.next()) {
+				totalCount = this.rs.getInt("total");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try { if(rs != null) rs.close(); } catch(Exception e) {}
+			try { if(pstmt != null) pstmt.close(); } catch(Exception e) {}
+			try { if(conn != null) conn.close(); } catch(Exception e) {}
+		}
+		
+		return totalCount;
+	}
     
     // 글 등록
     public void insert(BoardModel boardModel) {
