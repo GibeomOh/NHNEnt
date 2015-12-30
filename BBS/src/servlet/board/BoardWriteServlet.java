@@ -24,7 +24,9 @@ public class BoardWriteServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/jsps/board/boardWrite.jsp");
+		// JSP로 출력을 위임
+		System.out.println("글 쓰기 버튼 클릭");
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/jsp/board/boardWrite.jsp");
 		requestDispatcher.forward(request, response);
 	}
 
@@ -37,7 +39,7 @@ public class BoardWriteServlet extends HttpServlet {
 		String email = request.getParameter("email");
 		String contents = request.getParameter("contents");
 		String password = request.getParameter("password");
-		
+		 
 		// 모델
 		boardModel = new BoardModel();
 		boardModel.setSubject(subject);
@@ -50,7 +52,6 @@ public class BoardWriteServlet extends HttpServlet {
 		this.boardDAO.insert(boardModel);
 
 		// 페이지 이동
-		response.sendRedirect("boardListServlet");
+		response.sendRedirect("BoardListServlet");
 	}
-
 }

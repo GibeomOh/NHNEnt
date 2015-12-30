@@ -39,7 +39,7 @@ public class BoardListServlet extends HttpServlet {
 		request.setAttribute("boardModel", boardModel);
 				
 		// View 보내기
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/jsps/board/boardList.jsp");
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/boardList.jsp");
 		requestDispatcher.forward(request, response);
 		
 //		response.getWriter().append("Served at: ").append(request.getContextPath());

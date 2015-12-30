@@ -1,20 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="model.board.BoardModel, java.util.List" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+ <%@ page import="model.board.BoardModel, java.util.List" %>
+   
 <%
 	List<BoardModel> boardList = (List<BoardModel>)request.getAttribute("boardList");
 	BoardModel boardModel = (BoardModel)request.getAttribute("boardModel");
 	int totalCount = (Integer)request.getAttribute("totalCount");
-	String pageNavigator = (String)request.getAttribute("pageNavigator");
 %>
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
-<!-- XHTML 네임스페이스: 작성된 페이지가 XHTML로 작성되었음을 알림 -->
-<html xmlns="http://www.w3.org/1999/xhtml">
-
+ 
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
-<title>게시판 목록</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>NHNEnt. 게시판</title>
 <style type="text/css">
 	* {font-size: 9pt;}
 	p {width: 600px; text-align: right;}
@@ -25,13 +23,12 @@
 		location.href=url;
 	}
 </script>
-<%
-
-%>
+asdfaf
 </head>
+
 <body>
 	<table border="1" summary="게시판 목록">
-		<caption>게시판 목록</caption>
+		<caption>NHNEnt. 게시판</caption>
 		<colgroup>
 			<col width="50" />
 			<col width="300" />
@@ -43,7 +40,7 @@
 			<tr>
 				<th>번호</th>
 				<th>제목</th>
-				<th>작성자</th>
+				<th>이메일</th>
 				<th>등록 일시</th>
 				<th>조회수</th>
 			</tr>
@@ -74,13 +71,12 @@
 		</tbody>
 		<tfoot>
 			<tr>
-				<td align="center" colspan="5"><%=pageNavigator%></td>
 			</tr>
 		</tfoot>
 	</table>
 	<p>
-		<input type="button" value="목록" onclick="goUrl('<%=request.getContextPath()%>/board/boardListServlet');" />
-		<input type="button" value="글쓰기" onclick="goUrl('<%=request.getContextPath()%>/board/boardWriteServlet');" />
+		<input type="button" value="목록" onclick="goUrl('<%=request.getContextPath()%>/board/BoardListServlet');" />
+		<input type="button" value="글쓰기" onclick="goUrl('<%=request.getContextPath()%>/board/BoardWriteServlet');" />
 	</p>
 </body>
 </html>

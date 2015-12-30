@@ -26,7 +26,8 @@ public class BoardDAO {
     	List<BoardModel> boardList = null;
     	
     	try {
-			Class.forName(this.JDBC_DRIVER);
+			DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+//    		Class.forName(this.JDBC_DRIVER);
 			this.conn = DriverManager.getConnection(this.DB_URL, this.DB_ID, this.DB_PWD);
 			this.pstmt = this.conn.prepareStatement("SELECT num, subject, email, reg_date, hit FROM board"+ " ORDER BY num DESC ");
 			this.rs = this.pstmt.executeQuery();
