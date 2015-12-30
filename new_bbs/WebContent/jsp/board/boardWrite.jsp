@@ -25,11 +25,7 @@
 			form.subject.focus();
 			return false;
 		}
-		if(!mailexp.test(form.email.value)) {
-			alert("이메일을 형식을 확인하세요");
-			form.email.focus();
-			return false;
-		}
+
 		if (form.contents.value == '') {
 			alert('내용을 입력하세요');
 			form.content.focus();
@@ -69,7 +65,7 @@
 			</tr>
 			<tr>
 				<th align="center">비밀번호</th>
-				<td><input type="text" name="password" maxlength="20" /></td>
+				<td><input type="password" name="password" maxlength="20" /></td>
 			</tr>
 		</tbody>
 	</table>

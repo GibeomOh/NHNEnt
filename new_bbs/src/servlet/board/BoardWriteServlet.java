@@ -25,7 +25,6 @@ public class BoardWriteServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// JSP로 출력을 위임
-		System.out.println("글 쓰기 버튼 클릭");
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/jsp/board/boardWrite.jsp");
 		requestDispatcher.forward(request, response);
 	}
@@ -33,25 +32,31 @@ public class BoardWriteServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// POST 한글 파라미터 깨짐 처리
 		request.setCharacterEncoding("UTF-8");
+		this.boardDAO = new BoardDAO();
 		
 		// 파라미터
 		String subject = request.getParameter("subject");
 		String email = request.getParameter("email");
 		String contents = request.getParameter("contents");
 		String password = request.getParameter("password");
-		 
-		// 모델 생성
-		boardModel = new BoardModel();
-		boardModel.setSubject(subject);
-		boardModel.setEmail(email);
-		boardModel.setContents(contents);
-		boardModel.setPassword(password);
-		
-		// 게시물 등록
-		this.boardDAO = new BoardDAO();
-		this.boardDAO.insert(boardModel);
 
-		// 페이지 이동
-		response.sendRedirect("BoardListServlet");
+		if (boardDAO.isEmailPattern(email)) {
+			// 모델 생성
+			boardModel = new BoardModel();
+			boardModel.setSubject(subject);
+			boardModel.setEmail(email);
+			boardModel.setContents(contents);
+			boardModel.setPassword(password);
+
+			// 게시물 등록
+			this.boardDAO.insert(boardModel);
+
+			// 페이지 이동
+			response.sendRedirect("BoardListServlet");
+		}
+		
+		else {
+			response.sendError(588, "이메일 형식이 잘못되었습니다.");
+		}
 	}
 }

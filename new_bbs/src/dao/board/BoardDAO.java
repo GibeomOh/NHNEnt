@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import model.board.BoardModel;
 
@@ -143,9 +144,7 @@ public class BoardDAO {
     		this.conn = DriverManager.getConnection(DB_URL, DB_ID, DB_PWD);
     		this.pstmt = this.conn.prepareStatement("UPDATE board SET subject = ?, contents = ?, mod_date = NOW()" + " WHERE num = ?");
     		this.pstmt.setString(1, boardModel.getSubject());
-//			this.pstmt.setString(2, boardModel.getEmail());
 			this.pstmt.setString(2, boardModel.getContents());
-			System.out.println(boardModel.getContents());
 			this.pstmt.setInt(3, boardModel.getNum());
     		this.pstmt.executeUpdate();
     	} catch(Exception e) {
@@ -185,15 +184,16 @@ public class BoardDAO {
     		this.pstmt = this.conn.prepareStatement("DELETE FROM board"+ " WHERE num = ?");
     		this.pstmt.setInt(1, boardModel.getNum());
     		this.pstmt.executeUpdate();
-    		
     	} catch(Exception e) {
     		e.printStackTrace();
-    		
     	} finally {
 			try { if(rs != null) rs.close(); } catch(Exception e) {}
 			try { if(pstmt != null) pstmt.close(); } catch(Exception e) {}
 			try { if(conn != null) conn.close(); } catch(Exception e) {}
-			
     	}
+    }
+    
+    public boolean isEmailPattern(String email) {
+    	return Pattern.matches("[0-9a-zA-Z] + (.[_a-z0-9-]+)*@(?:\\w+\\.) + \\w + $", email);
     }
 }
