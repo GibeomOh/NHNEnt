@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import dao.board.BoardDAO;
 import model.board.BoardModel;
 
+@WebServlet("/board/BoardListServlet")
 public class BoardListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private BoardDAO boardDAO = null;

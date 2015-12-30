@@ -56,8 +56,8 @@
 					BoardModel board = boardList.get(i);
 			%>
 			<tr>
-				<td align="center"><%=totalCount%></td>
-				<td><a href="boardViewServlet?num=<%=board.getNum()%>"><%=board.getSubject()%></a></td>
+				<td align="center"><%=board.getNum()%></td>
+				<td><%=board.getSubject()%></td>
 				<td align="center"><%=board.getEmail()%></td>
 				<td align="center"><%=board.getRegDate().substring(0, 10) %></td>
 				<td align="center"><%=board.getHit()%></td>
@@ -67,15 +67,13 @@
 			}
 			%>
 		</tbody>
+		
 		<tfoot>
-			<tr>
-				<td align="center" colspan="5"><%=pageNavigator%></td>
-			</tr>
 		</tfoot>
 	</table>
 	<p>
-		<input type="button" value="목록" onclick="goUrl('<%=request.getContextPath()%>/board/boardListServlet');" />
-		<input type="button" value="글쓰기" onclick="goUrl('<%=request.getContextPath()%>/board/boardWriteServlet');" />
+		<input type="button" value="목록" onclick="goUrl('<%=request.getContextPath()%>/board/BoardListServlet');" />
+		<input type="button" value="글쓰기" onclick="goUrl('<%=request.getContextPath()%>/board/BoardWriteServlet');" />
 	</p>
 </body>
 </html>
