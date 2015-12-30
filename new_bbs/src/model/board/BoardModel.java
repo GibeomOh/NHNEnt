@@ -10,11 +10,6 @@ public class BoardModel {
     private int hit;				// 조회수
     private String regDate;		// 등록 일시
     private String modDate;	// 수정 일시
-    private String pageNum;
-    /** 검색 항목 */
-    private String searchType;
-    /** 검색어 */
-    private String searchText;
     
 	public int getNum() {
 		return num;
@@ -63,5 +58,12 @@ public class BoardModel {
 	}
 	public void setModDate(String modDate) {
 		this.modDate = modDate;
+	}
+	public String getWriter() {
+		writer = "";
+		return writer;
+	}
+	public void setWriter(String writer) {
+		this.writer = writer;
 	}
 }

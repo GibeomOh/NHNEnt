@@ -16,7 +16,7 @@ public class BoardDAO {
     private ResultSet rs = null;
     
     // 데이터베이스 접속 정보
-    private final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+//    private final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     private final String DB_URL = "jdbc:mysql://127.0.0.1:3306/BBS";
     private final String DB_ID = "NHNEnt";
     private final String DB_PWD = "1234";
@@ -61,7 +61,7 @@ public class BoardDAO {
     public BoardModel select(BoardModel boardModel) {
     	try {
     		// 데이터베이스 드라이버 로딩
-    		Class.forName(this.JDBC_DRIVER);
+    		DriverManager.registerDriver(new com.mysql.jdbc.Driver());
     		// 커넥션 정보 저장
     		this.conn = DriverManager.getConnection(DB_URL, DB_ID, DB_PWD);
     		// Query 설정
@@ -95,7 +95,7 @@ public class BoardDAO {
 		int totalCount = 0;
 
 		try {
-			Class.forName(this.JDBC_DRIVER);
+			DriverManager.registerDriver(new com.mysql.jdbc.Driver());
 			this.conn = DriverManager.getConnection(this.DB_URL, this.DB_ID, this.DB_PWD);
 			this.pstmt = this.conn.prepareStatement("SELECT COUNT(num) AS total FROM board");
 			this.rs = this.pstmt.executeQuery();
@@ -117,14 +117,16 @@ public class BoardDAO {
     // 글 등록
     public void insert(BoardModel boardModel) {
     	try {
-    		Class.forName(this.JDBC_DRIVER);
+    		DriverManager.registerDriver(new com.mysql.jdbc.Driver());
     		this.conn = DriverManager.getConnection(DB_URL, DB_ID, DB_PWD);
-    		this.pstmt = this.conn.prepareStatement("INSERT INTO board (subject, emil, contents, hit, reg_date, mod_date)"+ " VALUES (?, ?, ?, 0, NOW(), MEW())");
+    		this.pstmt = this.conn.prepareStatement("INSERT INTO board (subject, email, contents, password, writer, hit, reg_date, mod_date)"+ " VALUES (?, ?, ?, ?, ?, 0, NOW(), NOW())");
     		this.pstmt.setString(1, boardModel.getSubject());
 			this.pstmt.setString(2, boardModel.getEmail());
 			this.pstmt.setString(3, boardModel.getContents());
+			this.pstmt.setString(4, boardModel.getPassword());
+			this.pstmt.setString(5, boardModel.getWriter());
     		this.pstmt.executeUpdate();
-    		
+    		System.out.println("글 등록 완료!");
     	} catch(Exception e) {
     		e.printStackTrace();
     		
@@ -132,14 +134,13 @@ public class BoardDAO {
 			try { if(rs != null) rs.close(); } catch(Exception e) {}
 			try { if(pstmt != null) pstmt.close(); } catch(Exception e) {}
 			try { if(conn != null) conn.close(); } catch(Exception e) {}
-			
     	}
-    }
+    } 
     
     // 글 수정
     public void update(BoardModel boardModel) {
     	try {
-    		Class.forName(this.JDBC_DRIVER);
+    		DriverManager.registerDriver(new com.mysql.jdbc.Driver());
     		this.conn = DriverManager.getConnection(DB_URL, DB_ID, DB_PWD);
     		this.pstmt = this.conn.prepareStatement("UPDATE board SET subject = ?, emil = ?, contents = ?, mod_date = NOW()"+ " WHERE num = ?");
     		this.pstmt.setString(1, boardModel.getSubject());
@@ -162,7 +163,7 @@ public class BoardDAO {
     // 조회수 증가
     public void updateHit(BoardModel boardModel) {
     	try {
-    		Class.forName(this.JDBC_DRIVER);
+    		DriverManager.registerDriver(new com.mysql.jdbc.Driver());
     		this.conn = DriverManager.getConnection(DB_URL, DB_ID, DB_PWD);
     		this.pstmt = this.conn.prepareStatement("UPDATE board SET hit = hit + 1"+ " WHERE num = ?");
     		this.pstmt.setInt(1, boardModel.getNum());
@@ -182,7 +183,7 @@ public class BoardDAO {
     // 글 삭제
     public void delete(BoardModel boardModel) {
     	try {
-    		Class.forName(this.JDBC_DRIVER);
+    		DriverManager.registerDriver(new com.mysql.jdbc.Driver());
     		this.conn = DriverManager.getConnection(DB_URL, DB_ID, DB_PWD);
     		this.pstmt = this.conn.prepareStatement("DELETE FROM board"+ " WHERE num = ?");
     		this.pstmt.setInt(1, boardModel.getNum());

@@ -23,9 +23,19 @@
 			form.subject.focus();
 			return false;
 		}
-		if (form.writer.value == '') {
-			alert('작성자을 입력하세요');
-			form.writer.focus();
+		if (form.email.value == '') {
+			alert('이메일을 입력하세요');
+			form.email.focus();
+			return false;
+		}
+		if (form.content.value == '') {
+			alert('내용을 입력하세요');
+			form.content.focus();
+			return false;
+		}
+		if (form.password.value == '') {
+			alert('비밀번호를 입력하세요');
+			form.password.focus();
 			return false;
 		}
 		return true;
@@ -47,16 +57,17 @@
 				<td><input type="text" name="subject" size="80" maxlength="100" /></td>
 			</tr>
 			<tr>
-				<th align="center">작성자</th>
-				<td><input type="text" name="writer" maxlength="20" /></td>
+				<th align="center">이메일</th>
+				<td><input type="text" name="email" maxlength="20" /></td>
 			</tr>
 			<tr>
 				<td colspan="2">
-					<textarea name="contents" cols="80" rows="10"></textarea>
-					<script>
-					CKEDITOR.replace('contents');
-					</script>
+					<textarea name="contents" rows="10" cols="100" ></textarea>
 				</td>
+			</tr>
+			<tr>
+				<th align="center">비밀번호</th>
+				<td><input type="text" name="password" maxlength="20" /></td>
 			</tr>
 		</tbody>
 	</table>
