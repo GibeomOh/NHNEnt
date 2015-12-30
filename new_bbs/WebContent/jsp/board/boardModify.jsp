@@ -1,10 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="model.board.BoardModel" %>
+<%
+	BoardModel boardModel = (BoardModel)request.getAttribute("boardModel");
+	String currPassword = boardModel.getPassword();
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>글 작성</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+<title>글 수정</title>
 <script type="text/javascript" src="<%=request.getContextPath()%>/ckeditor/ckeditor.js"></script>
 <style type="text/css">
 	* {font-size: 9pt;}
@@ -15,17 +20,12 @@
 	function goUrl(url) {
 		location.href=url;
 	}
-	// 등록 폼 체크
-	function boardWriteCheck() {
-		var form = document.boardWriteForm;
+	// 수정 폼 체크
+	function boardModifyCheck() {
+		var form = document.boardModifyForm;
 		if (form.subject.value == '') {
 			alert('제목을 입력하세요.');
 			form.subject.focus();
-			return false;
-		}
-		if (form.email.value == '') {
-			alert('이메일을 입력하세요');
-			form.email.focus();
 			return false;
 		}
 		if (form.contents.value == '') {
@@ -37,16 +37,21 @@
 			alert('비밀번호를 입력하세요');
 			form.password.focus();
 			return false;
-		}
+		} 
+		else if(form.password.value != <%=currPassword %>) {
+			alert('비밀번호를 확인하세요');
+			form.password.focus();
+			return false;
+		} 
 		return true;
 	}
 </script>
-</head>
 
 <body>
-	<form name="boardWriteForm" action="<%=request.getContextPath()%>/board/BoardWriteServlet" method="post" onsubmit="return boardWriteCheck();">
-	<table border="1" summary="글 작성">
-		<caption>글 작성</caption>
+	<form name="boardModifyForm" action="<%=request.getContextPath() %>/board/BoardModifyServlet" method="post" onsubmit="return boardModifyCheck();">
+	<input type="hidden" name="num" value="<%=boardModel.getNum()%>" />
+	<table border="1" summary="글 수정">
+		<caption>글 수정</caption>
 		<colgroup>
 			<col width="100" />
 			<col width="500" />
@@ -54,15 +59,19 @@
 		<tbody>
 			<tr>
 				<th align="center">제목</th>
-				<td><input type="text" name="subject" size="80" maxlength="100" /></td>
+				<td><input type="text" name="subject" size="80" maxlength="100" value="<%=boardModel.getSubject()%>" /></td>
+			</tr>
+			<tr>
+				<th align="center">작성자</th>
+				<td><%=boardModel.getWriter()%></td>
 			</tr>
 			<tr>
 				<th align="center">이메일</th>
-				<td><input type="text" name="email" maxlength="20" /></td>
+				<td><%=boardModel.getEmail()%></td>
 			</tr>
 			<tr>
 				<td colspan="2">
-					<textarea name="contents" rows="10" cols="100" ></textarea>
+					<textarea name="contents" cols="80" rows="10"><%=boardModel.getContents()%></textarea>
 				</td>
 			</tr>
 			<tr>
@@ -73,7 +82,7 @@
 	</table>
 	<p>
 		<input type="button" value="목록" onclick="goUrl('<%=request.getContextPath()%>/board/BoardListServlet');" />
-		<input type="submit" value="글쓰기" />
+		<input type="submit" value="글수정" />
 	</p>
 	</form>
 </body>

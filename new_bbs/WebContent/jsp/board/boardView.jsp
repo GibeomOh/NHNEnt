@@ -7,11 +7,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
-<title>게시판 상세보기</title>
+<title>글 보기</title>
 <style type="text/css">
 	* {font-size: 9pt;}
 	.btn_align {width: 600px; text-align: right;}
-	table tbody tr th {background-color: gray;}
+	table tbody tr th {background-color: lightgray;}
 </style>
 <script type="text/javascript">
 	function goUrl(url) {
@@ -26,8 +26,8 @@
 </script>
 
 <body>
-	<table border="1" summary="게시판 상세조회">
-		<caption>게시판 상세조회</caption>
+	<table border="1" summary="글 보기">
+		<caption>글 보기</caption>
 		<colgroup>
 			<col width="100" />
 			<col width="400" />
@@ -40,8 +40,8 @@
 			<tr>
 				<th align="center">작성자</th>
 				<td><%=boardModel.getWriter()%></td>
-				<th align="center">조회수</th>
-				<td width="60"><%=boardModel.getHit()%></td>
+				<th style="width:10%" align="center">조회수</th>
+				<td style="width:10%" align="center"><%=boardModel.getHit()%></td>
 			</tr>
 			<tr>
 				<th align="center">이메일</th>

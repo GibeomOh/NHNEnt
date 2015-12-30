@@ -5,7 +5,6 @@
 	List<BoardModel> boardList = (List<BoardModel>)request.getAttribute("boardList");
 	BoardModel boardModel = (BoardModel)request.getAttribute("boardModel");
 	int totalCount = (Integer)request.getAttribute("totalCount");
-	String pageNavigator = (String)request.getAttribute("pageNavigator");
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -15,7 +14,7 @@
 <style type="text/css">
 	* {font-size: 9pt;}
 	p {width: 600px; text-align: right;}
-	table thead tr th {background-color: gray;}
+	table thead tr th {background-color: lightgray;}
 </style>
 <script type="text/javascript">
 	function goUrl(url) {

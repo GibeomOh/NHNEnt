@@ -63,7 +63,7 @@ public class BoardDAO {
     		// 커넥션 정보 저장
     		this.conn = DriverManager.getConnection(DB_URL, DB_ID, DB_PWD);
     		// Query 설정
-    		this.pstmt = this.conn.prepareStatement("SELECT num, subject, contents, email, hit, reg_date FROM board"+ " WHERE num = ?");
+    		this.pstmt = this.conn.prepareStatement("SELECT num, subject, contents, password, email, hit, reg_date FROM board"+ " WHERE num = ?");
     		this.pstmt.setInt(1, boardModel.getNum());
     		// Query 실행
     		this.rs = this.pstmt.executeQuery();
@@ -74,6 +74,7 @@ public class BoardDAO {
                 boardModel.setSubject(this.rs.getString("subject"));
                 boardModel.setEmail(this.rs.getString("email"));
                 boardModel.setContents(this.rs.getString("contents"));
+                boardModel.setPassword(this.rs.getString("password"));
                 boardModel.setRegDate(this.rs.getString("reg_date"));
                 boardModel.setHit(this.rs.getInt("hit"));
     		}
@@ -140,21 +141,19 @@ public class BoardDAO {
     	try {
     		DriverManager.registerDriver(new com.mysql.jdbc.Driver());
     		this.conn = DriverManager.getConnection(DB_URL, DB_ID, DB_PWD);
-    		this.pstmt = this.conn.prepareStatement("UPDATE board SET subject = ?, emil = ?, contents = ?, mod_date = NOW()"+ " WHERE num = ?");
+    		this.pstmt = this.conn.prepareStatement("UPDATE board SET subject = ?, contents = ?, mod_date = NOW()" + " WHERE num = ?");
     		this.pstmt.setString(1, boardModel.getSubject());
-			this.pstmt.setString(2, boardModel.getEmail());
-			this.pstmt.setString(3, boardModel.getContents());
-			this.pstmt.setInt(4, boardModel.getNum());
+//			this.pstmt.setString(2, boardModel.getEmail());
+			this.pstmt.setString(2, boardModel.getContents());
+			System.out.println(boardModel.getContents());
+			this.pstmt.setInt(3, boardModel.getNum());
     		this.pstmt.executeUpdate();
-    		
     	} catch(Exception e) {
     		e.printStackTrace();
-    		
     	} finally {
 			try { if(rs != null) rs.close(); } catch(Exception e) {}
 			try { if(pstmt != null) pstmt.close(); } catch(Exception e) {}
 			try { if(conn != null) conn.close(); } catch(Exception e) {}
-			
     	}
     }
     
