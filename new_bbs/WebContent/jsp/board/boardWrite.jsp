@@ -18,13 +18,15 @@
 	// 등록 폼 체크
 	function boardWriteCheck() {
 		var form = document.boardWriteForm;
+		var mailexp = /[a-z0-9]{2,}@[a-z0-9-]{2,}\.[a-z0-9]{2,}/i; 
+		
 		if (form.subject.value == '') {
 			alert('제목을 입력하세요.');
 			form.subject.focus();
 			return false;
 		}
-		if (form.email.value == '') {
-			alert('이메일을 입력하세요');
+		if(!mailexp.test(form.email.value)) {
+			alert("이메일을 형식을 확인하세요");
 			form.email.focus();
 			return false;
 		}
