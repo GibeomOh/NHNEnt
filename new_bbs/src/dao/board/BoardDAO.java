@@ -193,6 +193,7 @@ public class BoardDAO {
     	}
     }
     
+    // 이메일 형식 확인
     public boolean isEmailPattern(String email) {
     	return Pattern.matches("[0-9a-zA-Z] + (.[_a-z0-9-]+)*@(?:\\w+\\.) + \\w + $", email);
     }
