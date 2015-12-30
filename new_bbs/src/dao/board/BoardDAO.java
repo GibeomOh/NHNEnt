@@ -16,7 +16,6 @@ public class BoardDAO {
     private ResultSet rs = null;
     
     // 데이터베이스 접속 정보
-//    private final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     private final String DB_URL = "jdbc:mysql://127.0.0.1:3306/BBS";
     private final String DB_ID = "NHNEnt";
     private final String DB_PWD = "1234";
@@ -27,7 +26,6 @@ public class BoardDAO {
     	
     	try {
 			DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-//    		Class.forName(this.JDBC_DRIVER);
 			this.conn = DriverManager.getConnection(this.DB_URL, this.DB_ID, this.DB_PWD);
 			this.pstmt = this.conn.prepareStatement("SELECT num, subject, email, reg_date, hit FROM board"+ " ORDER BY num DESC ");
 			this.rs = this.pstmt.executeQuery();
