@@ -40,7 +40,7 @@ public class BoardWriteServlet extends HttpServlet {
 		String contents = request.getParameter("contents");
 		String password = request.getParameter("password");
 		 
-		// 모델
+		// 모델 생성
 		boardModel = new BoardModel();
 		boardModel.setSubject(subject);
 		boardModel.setEmail(email);

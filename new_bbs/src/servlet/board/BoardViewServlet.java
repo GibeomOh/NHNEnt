@@ -1,7 +1,6 @@
 package servlet.board;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,34 +12,36 @@ import javax.servlet.http.HttpServletResponse;
 import dao.board.BoardDAO;
 import model.board.BoardModel;
 
-@WebServlet("/board/BoardListServlet")
-public class BoardListServlet extends HttpServlet {
+@WebServlet("/board/BoardViewServlet")
+public class BoardViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private BoardDAO boardDAO = null;
-    
-    public BoardListServlet() {
+	
+    public BoardViewServlet() {
         super();
     }
 
-	/** 게시판 목록 조회 */
+	/** 상세 조회 접근 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 모델 생성
-		BoardModel boardModel = new BoardModel();
+		// 상세 조회 하는 글 번호
+		String num = request.getParameter("num");
 
-		// 게시물 총 수
-		this.boardDAO = new BoardDAO();
-		int totalCount = this.boardDAO.selectCount(boardModel);
+		// 모델 정보 입력
+		BoardModel boardModel = new BoardModel();
+		boardModel.setNum(Integer.parseInt(num));
 		
-		// 게시물 목록을 얻는 쿼리 실행
-		List<BoardModel> boardList = this.boardDAO.selectList(boardModel);
+		// 게시물 상세 조회
+		this.boardDAO = new BoardDAO();
+		boardModel = this.boardDAO.select(boardModel);
+		
+		// 게시물 조회수 증가
+		this.boardDAO.updateHit(boardModel);
 		
 		// View 사용될 객체 설정
-		request.setAttribute("totalCount", totalCount);
-		request.setAttribute("boardList", boardList);
 		request.setAttribute("boardModel", boardModel);
 		
 		// View 보내기
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/jsp/board/boardList.jsp");
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/jsp/board/boardView.jsp");
 		requestDispatcher.forward(request, response);
 	}
 }
