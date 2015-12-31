@@ -10,15 +10,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.board.BoardDAOInterface;
-import dao.board.BoardMyBatisDAO;
+import dao.board.BoardDAO;
 import model.board.BoardModel;
 
 @WebServlet("/board/BoardListServlet")
 public class BoardListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private BoardDAOInterface boardDAO = null;
-//	private BoardDAO boardDAO = null;
+	private BoardDAO boardDAO = null;
     
     public BoardListServlet() {
         super();
@@ -30,9 +28,7 @@ public class BoardListServlet extends HttpServlet {
 		BoardModel boardModel = new BoardModel();
 
 		// 게시물 총 수
-//		this.boardDAO = new BoardDAO();
-		// mybatis 사용
-		this.boardDAO = new BoardMyBatisDAO();
+		this.boardDAO = new BoardDAO();
 		int totalCount = this.boardDAO.selectCount(boardModel);
 		
 		// 게시물 목록을 얻는 쿼리 실행

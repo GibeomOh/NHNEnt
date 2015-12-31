@@ -58,8 +58,7 @@
 				<td align="center"><%=board.getNum()%></td>
 				<td><a href="BoardViewServlet?num=<%=board.getNum()%>"><%=board.getSubject()%></a></td>
 				<td align="center"><%=board.getEmail()%></td>
-				<td align="center"></td>
-				<!--  board.getRegDate().substring(0, 10) -->
+				<td align="center"><%=board.getRegDate().substring(0, 10) %></td>
 				<td align="center"><%=board.getHit()%></td>
 			</tr>
 			<%

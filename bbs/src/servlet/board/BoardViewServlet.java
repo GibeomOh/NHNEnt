@@ -9,14 +9,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.board.BoardDAOInterface;
-import dao.board.BoardMyBatisDAO;
+import dao.board.BoardDAO;
 import model.board.BoardModel;
 
 @WebServlet("/board/BoardViewServlet")
 public class BoardViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private BoardDAOInterface boardDAO = null;
+	private BoardDAO boardDAO = null;
 	
     public BoardViewServlet() {
         super();
@@ -32,7 +31,7 @@ public class BoardViewServlet extends HttpServlet {
 		boardModel.setNum(Integer.parseInt(num));
 		
 		// 게시물 상세 조회
-		this.boardDAO = new BoardMyBatisDAO();
+		this.boardDAO = new BoardDAO();
 		boardModel = this.boardDAO.select(boardModel);
 		
 		// 게시물 조회수 증가

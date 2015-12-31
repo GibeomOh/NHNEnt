@@ -9,14 +9,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.board.BoardDAOInterface;
-import dao.board.BoardMyBatisDAO;
+import dao.board.BoardDAO;
 import model.board.BoardModel;
 
 @WebServlet("/board/BoardModifyServlet")
 public class BoardModifyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private BoardDAOInterface boardDAO = null;
+	private BoardDAO boardDAO = null;
     
     public BoardModifyServlet() {
         super();
@@ -32,7 +31,7 @@ public class BoardModifyServlet extends HttpServlet {
 		boardModel.setNum(Integer.parseInt(num));
 
 		// 게시물 상세 조회
-		this.boardDAO = new BoardMyBatisDAO();
+		this.boardDAO = new BoardDAO();
 		boardModel = this.boardDAO.select(boardModel);
 		
 		// View 사용될 객체 설정
@@ -65,7 +64,7 @@ public class BoardModifyServlet extends HttpServlet {
 		boardModel.setContents(contents);
 
 		// 게시물 수정 처리
-		this.boardDAO = new BoardMyBatisDAO();
+		this.boardDAO = new BoardDAO();
 		this.boardDAO.update(boardModel);
 		
 		// 페이지 이동	

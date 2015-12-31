@@ -9,14 +9,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.board.BoardDAOInterface;
-import dao.board.BoardMyBatisDAO;
+import dao.board.BoardDAO;
 import model.board.BoardModel;
 
 @WebServlet("/board/BoardWriteServlet")
 public class BoardWriteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private BoardDAOInterface boardDAO = null;
+	private BoardDAO boardDAO = null;
 	private BoardModel boardModel = null;
        
     public BoardWriteServlet() {
@@ -33,7 +32,7 @@ public class BoardWriteServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// POST 한글 파라미터 깨짐 처리
 		request.setCharacterEncoding("UTF-8");
-		this.boardDAO = new BoardMyBatisDAO();
+		this.boardDAO = new BoardDAO();
 		
 		// 파라미터
 		String subject = request.getParameter("subject");
@@ -41,7 +40,7 @@ public class BoardWriteServlet extends HttpServlet {
 		String contents = request.getParameter("contents");
 		String password = request.getParameter("password");
 
-//		if (boardDAO.isEmailPattern(email)) {
+		if (boardDAO.isEmailPattern(email)) {
 			// 모델 생성
 			boardModel = new BoardModel();
 			boardModel.setSubject(subject);
@@ -54,10 +53,10 @@ public class BoardWriteServlet extends HttpServlet {
 
 			// 페이지 이동
 			response.sendRedirect("BoardListServlet");
-//		}
-//		
-//		else {
-//			response.sendError(588, "이메일 형식이 잘못되었습니다.");
-//		}
+		}
+		
+		else {
+			response.sendError(588, "이메일 형식이 잘못되었습니다.");
+		}
 	}
 }
